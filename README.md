@@ -5,6 +5,10 @@
 front-end - React.JS
 back-end - Spring MCV
 
+## Live Demo
+
+http://car-stock.surge.sh/cars
+
 
 ## Getting Started
 
@@ -25,9 +29,15 @@ npm install
 ```
 npm run
 ```
+to see all the cars go to 
+
+```
+http://localhost:3000/cars
+```
 
 
-## Deployment
+
+
 
 
 ## Built With
