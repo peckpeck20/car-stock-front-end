@@ -7,7 +7,7 @@ back-end - Spring MCV
 
 ## Live Demo
 
-http://car-stock.surge.sh/cars
+http://car-stock.surge.sh
 
 
 ## Getting Started
