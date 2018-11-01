@@ -1,7 +1,10 @@
 import React, { Component } from "react";
+
 import SkyLight from "react-skylight";
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
+import IconButton from '@material-ui/core/IconButton';
+import BorderColor from '@material-ui/icons/BorderColor';
 
 class EditCar extends Component {
   constructor(props) {
@@ -46,9 +49,12 @@ class EditCar extends Component {
     const style = {
       margin: 12
     };
-
-    // const test = this.props
-    // console.log(test)
+    const popUpStyles = {
+      width: '70%',
+      height: '600px',
+      marginTop: '-300px',
+      marginLeft: '-35%',
+    }
 
     return (
       <div>
@@ -56,6 +62,7 @@ class EditCar extends Component {
           hideOnOverlayClicked
           ref={ref => (this.simpleDialog = ref)}
           title="Edit car"
+          dialogStyles={popUpStyles}
         >
           <TextField
             name="brand"
@@ -107,12 +114,12 @@ class EditCar extends Component {
           <br />
           <RaisedButton label="Save Edit" primary={true} style={style}  onClick={this.handleSubmit}/>
         </SkyLight>
-        <button
-          className="btn btn-info"
+        <IconButton
+
           onClick={() => this.simpleDialog.show()}
         >
-         Edit 
-        </button>
+        <BorderColor/>
+        </IconButton>
       </div>
     );
   }

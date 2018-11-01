@@ -1,6 +1,9 @@
 import React, { Component } from "react";
+
 import ReactTable from "react-table";
 import "react-table/react-table.css";
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import { ToastContainer, toast } from 'react-toastify';
 import { confirmAlert } from 'react-confirm-alert'; // Import alert
@@ -99,7 +102,18 @@ export default class Carlist extends Component {
     //       <td>{value.year}</td>
     //       <td>{value.price}</td>
     //     </tr>)
+    // const {cars} = this.state;
+    // const headers = [
+    //   { label: "brand", key: "brand" },
+    //   { label: "model", key: "model" },
+    //   { label: "color", key: "color" },
+    //   { label: "fuel", key: "fuel" },
+    //   { label: "year", key: "year" },
+    //   { label: "price", key: "price" },
 
+    // ];
+
+    //console.log(cars)
     return (
       <div>
         <h3>My Cars</h3>
@@ -109,9 +123,6 @@ export default class Carlist extends Component {
             </tbody>
         </table> */}
         <AddCar addCar={this.addCar} />
-        <CSVLink data={this.state.cars} >Download CSV</CSVLink>
-        <CSVDownload data={this.state.cars} target="_blank" />
-
         <ReactTable
           data={this.state.cars}
           columns={[
@@ -147,14 +158,14 @@ export default class Carlist extends Component {
                   Header: "Delete",
                   accessor: "_links.self.href",
                   Cell: ({ value }) => (
-                    <button
-                      className="btn btn-danger"
+                    <IconButton
+                    color="secondary"
                       onClick={() => {
                         this.deleteCar(value);
                       }}
                     >
-                      delete
-                    </button>
+                      <DeleteIcon/>
+                    </IconButton>
                   )
                 },
                 {
@@ -173,6 +184,12 @@ export default class Carlist extends Component {
           defaultPageSize={10}
           className="-striped -highlight"
         />
+        {/* <CSVLink data={this.state.cars} target="_blank" 
+        filename={"my-file.csv"}
+        className="btn btn-primary"  
+        >DOWNLAOD
+        </CSVLink> */}
+        
         <ToastContainer  autoClose={1500} />
       </div>
     );

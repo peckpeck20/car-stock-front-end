@@ -36,7 +36,7 @@ class AddCar extends Component {
     };
 
 
-    //pass it to the function via props
+    //accessfunction via props
     this.props.addCar(newCar);
     this.simpleDialog.hide();
     
@@ -46,6 +46,12 @@ class AddCar extends Component {
     const style = {
       margin: 12
     };
+    const popUpStyles = {
+      width: '70%',
+      height: '600px',
+      marginTop: '-300px',
+      marginLeft: '-35%',
+    }
 
     return (
       <div>
@@ -53,6 +59,7 @@ class AddCar extends Component {
           hideOnOverlayClicked
           ref={ref => (this.simpleDialog = ref)}
           title="What kind of car would you like to add"
+          dialogStyles={popUpStyles}
         >
           <TextField
             name="brand"
@@ -106,12 +113,13 @@ class AddCar extends Component {
           {/* <button onClick={() => this.props.addCar()}>Save Car</button> */}
           <RaisedButton label="Save car" primary={true} style={style}  onClick={this.handleSubmit}/>
         </SkyLight>
-        <button
-          className="btn btn-info"
+        <RaisedButton
+          label="Add car"
           onClick={() => this.simpleDialog.show()}
+          primary={true} style={style}
         >
-          Add car!
-        </button>
+         
+        </RaisedButton>
       </div>
     );
   }
