@@ -8,7 +8,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { ToastContainer, toast } from 'react-toastify';
 import { confirmAlert } from 'react-confirm-alert'; // Import alert
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
-import { CSVLink, CSVDownload } from 'react-csv';
+// import { CSVLink, CSVDownload } from 'react-csv';
 
 import AddCar from './AddCar';
 import EditCar from './EditCar';
