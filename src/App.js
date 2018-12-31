@@ -13,17 +13,17 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div className="App">
-          <header className="App-header">
+          {/* <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
             <h1 className="App-title">My car shop</h1>
-          </header>
+          </header> */}
           <BrowserRouter>
             <div>
-              <Link to="/">Root</Link>
+              {/* <Link to="/">Root</Link>
               <Link to="/home">Home</Link>
-              <Link to="/cars">Cars</Link>
+              <Link to="/cars">Cars</Link> */}
               <Switch>
-                <Route exact path="/" render={() => <h2>this is root!</h2>} />
+                <Route exact path="/" component={Carlist} />
                 <Route path="/home" component={Home} />
                 <Route path="/cars" component={Carlist} />
                 <Route render={() => <h1>Page not found</h1>} />

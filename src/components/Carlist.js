@@ -8,26 +8,32 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { ToastContainer, toast } from 'react-toastify';
 import { confirmAlert } from 'react-confirm-alert'; // Import alert
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
-import {CSVLink, CSVDownload} from 'react-csv';
+import { CSVLink, CSVDownload } from 'react-csv';
 
 import AddCar from './AddCar';
 import EditCar from './EditCar';
+import { Loader } from "./Loader";
 
 export default class Carlist extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      cars: []
+      cars: [],
+      isLoading: true
     };
   }
 
-  fetchCars = () => {
-    fetch("https://carstockrest.herokuapp.com/cars")
+
+  fetchCars = async () => {
+    await fetch("https://carstockrest.herokuapp.com/cars")
       .then(res => res.json())
       // .then(resData => console.log(resData._embedded.cars));
       .then(resData => {
-        this.setState({ cars: resData._embedded.cars });
+        this.setState({
+          cars: resData._embedded.cars,
+          isLoading: false
+        });
         console.log("fetched");
       });
   };
@@ -41,12 +47,12 @@ export default class Carlist extends Component {
           label: 'Yes',
           onClick: () => {
             fetch(value, { method: "DELETE" })
-            .then(res => {
+              .then(res => {
                 this.fetchCars()
                 toast.success("Car Deleted", {
-                    position: toast.POSITION.TOP_CENTER
-                  });
-            });
+                  position: toast.POSITION.TOP_CENTER
+                });
+              });
           }
         },
         {
@@ -58,32 +64,32 @@ export default class Carlist extends Component {
   };
 
   addCar = (newCar) => {
-    fetch('https://carstockrest.herokuapp.com/cars', { 
+    fetch('https://carstockrest.herokuapp.com/cars', {
       method: 'POST',
-      headers : {'Content-Type' : 'application/json'},
-     body : JSON.stringify(newCar) 
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newCar)
     })
-    .then(res => {
+      .then(res => {
         this.fetchCars()
         toast.success("Car added", {
-            position: toast.POSITION.TOP_CENTER
-          });
-    });
+          position: toast.POSITION.TOP_CENTER
+        });
+      });
   }
-  
-  updateCar = (link,editCar) => {
-    fetch(link, { 
+
+  updateCar = (link, editCar) => {
+    fetch(link, {
       method: 'PUT',
-      headers : {'Content-Type' : 'application/json'},
-      body : JSON.stringify(editCar) 
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(editCar)
     })
-    .then(res => {
+      .then(res => {
         this.fetchCars()
         toast.success("Car updated", {
-            position: toast.POSITION.TOP_CENTER
-          });
-    })
-    .catch(error => console.log(error))
+          position: toast.POSITION.TOP_CENTER
+        });
+      })
+      .catch(error => console.log(error))
   }
 
   componentDidMount() {
@@ -123,74 +129,77 @@ export default class Carlist extends Component {
             </tbody>
         </table> */}
         <AddCar addCar={this.addCar} />
-        <ReactTable
-          data={this.state.cars}
-          columns={[
-            {
-              columns: [
-                {
-                  Header: "brand",
-                  accessor: "brand"
-                },
-                {
-                  Header: "model",
-                  accessor: "model"
-                },
-                {
-                  Header: "Color",
-                  accessor: "color"
-                },
-                {
-                  Header: "Fuel",
-                  accessor: "fuel"
-                 },
-                {
-                  Header: "Year",
-                  accessor: "year"
-                },
-                {
-                  Header: "Price",
-                  accessor: "price"
-                },
-                {
-                  sortable:false,
-                  filterable:false,
-                  Header: "Delete",
-                  accessor: "_links.self.href",
-                  Cell: ({ value }) => (
-                    <IconButton
-                    color="secondary"
-                      onClick={() => {
-                        this.deleteCar(value);
-                      }}
-                    >
-                      <DeleteIcon/>
-                    </IconButton>
-                  )
-                },
-                {
-                  sortable:false,
-                  filterable:false,
-                  Header: "Edit",
-                  accessor: "_links.self.href",
-                  Cell: ({ row,value }) => (
-                    <EditCar link={value} car={row} updateCar={this.updateCar}/>
-                  )
-                }
-              ]
-            }
-          ]}
-          filterable
-          defaultPageSize={10}
-          className="-striped -highlight"
-        />
+        {
+          this.state.isLoading ? (<Loader />) : (<ReactTable
+            data={this.state.cars}
+            columns={[
+              {
+                columns: [
+                  {
+                    Header: "brand",
+                    accessor: "brand"
+                  },
+                  {
+                    Header: "model",
+                    accessor: "model"
+                  },
+                  {
+                    Header: "Color",
+                    accessor: "color"
+                  },
+                  {
+                    Header: "Fuel",
+                    accessor: "fuel"
+                  },
+                  {
+                    Header: "Year",
+                    accessor: "year"
+                  },
+                  {
+                    Header: "Price",
+                    accessor: "price"
+                  },
+                  {
+                    sortable: false,
+                    filterable: false,
+                    Header: "Delete",
+                    accessor: "_links.self.href",
+                    Cell: ({ value }) => (
+                      <IconButton
+                        color="secondary"
+                        onClick={() => {
+                          this.deleteCar(value);
+                        }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    )
+                  },
+                  {
+                    sortable: false,
+                    filterable: false,
+                    Header: "Edit",
+                    accessor: "_links.self.href",
+                    Cell: ({ row, value }) => (
+                      <EditCar link={value} car={row} updateCar={this.updateCar} />
+                    )
+                  }
+                ]
+              }
+            ]}
+            filterable
+            defaultPageSize={10}
+            className="-striped -highlight"
+          />)
+        }
+
         {/* <CSVLink data={this.state.cars} target="_blank" 
         filename={"my-file.csv"}
         className="btn btn-primary"  
         >DOWNLAOD
         </CSVLink> */}
-        
-        <ToastContainer  autoClose={1500} />
+
+        <ToastContainer autoClose={1500} />
       </div>
     );
   }
