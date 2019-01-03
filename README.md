@@ -1,11 +1,33 @@
 
 
-# System to track and manage the stock of vehicles
+# Tracking and managing car stock system
 
-front-end - React.JS
-back-end - Spring MCV
 
-## Live Demo => Cars link
+### Features :white_check_mark:
+- [X] Create new car
+- [X] Read all cars in the database
+- [X] Update an existing car
+- [X] Delete a car
+- [X] Filtering & sorting
+- [X] Confirmation prompts
+- [X] Notification based on action
+
+### Tech stack :computer:
+
+#### database 
+- SQL
+- H2 in-memory database
+
+#### back-end
+- Java
+- Springboot MVC
+
+#### front-end
+- React.JS
+- Material UI
+
+
+### Live demo
 
 https://car-front.surge.sh/
 
