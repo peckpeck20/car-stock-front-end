@@ -50,7 +50,7 @@ npm install
 ```
 
 ```
-npm run
+npm start
 ```
 to see all the cars go to 
 
